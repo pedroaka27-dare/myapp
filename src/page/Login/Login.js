@@ -1,9 +1,27 @@
 import React from "react";
 import {View, Text, Image, TextInput, TouchableOpacity} from "react-native";
-import { styles } from "./styles";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-function App(){
+import { styles } from "./styles";
+import HomePage from "../HomePage/HomePage";
+
+const Tab=createBottomTabNavigator();
+
+function MyTabs(){
+  return(
+    <Tab.Navigator>
+      <Tab.Screen name="Login" component={Login}/>
+      <Tab.Screen name='HomePage' component={HomePage}/>
+    </Tab.Navigator>
+  )
+}
+
+
+function Login(){
   return (
+    <NavigationContainer>
+
     <View style={styles.container}>
 
       <View style={styles.TopBox}>
@@ -41,6 +59,7 @@ function App(){
       <View style={styles.BottomBox}>
 
       <TouchableOpacity
+      onPress={()=> HomePage}
       style={styles.Button}>
         <Text style={styles.ButtonText}>Entrar</Text>
 
@@ -53,6 +72,7 @@ function App(){
       </View>
       
     </View>
+    </NavigationContainer>
   )
 }
-export default App;
+export default Login;

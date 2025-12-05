@@ -1,9 +1,3 @@
-import { registerRootComponent } from 'expo';
-
-import Login from './src/page/Login/Login';
-import HomePage from './src/page/HomePage/HomePage';
-
-// registerRootComponent calls AppRegistry.registerComponent('main', () => App);
-// It also ensures that whether you load the app in Expo Go or in a native build,
-// the environment is set up appropriately
-registerRootComponent(Login);
+// Use expo-router entry when using file-based routing (app/ directory).
+// This avoids conflicts with manual registerRootComponent usage.
+import 'expo-router/entry';

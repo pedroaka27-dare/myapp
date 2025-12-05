@@ -1,31 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {View, Text, Image, TextInput, TouchableOpacity} from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-
-import { styles } from "./styles";
-import HomePage from "../HomePage/HomePage";
-
-const Tab=createBottomTabNavigator();
-
-function MyTabs(){
-  return(
-    <Tab.Navigator>
-      <Tab.Screen name="Login" component={Login}/>
-      <Tab.Screen name='HomePage' component={HomePage}/>
-    </Tab.Navigator>
-  )
-}
+import { Link } from 'expo-router';
 
 
-function Login(){
+import { styles } from "../../styles";
+
+
+
+
+
+function Login({}){
+  
+
   return (
-    <NavigationContainer>
 
     <View style={styles.container}>
 
       <View style={styles.TopBox}>
-        <Image source={require("../../../assets/logo/cofrinho.png")}
+        <Image source={require("../../assets/logo/cofrinho.png")}
         style={{width:256, height:256,}} />
 
         <Text style={styles.Title}> Bem vindo ! </Text>
@@ -39,17 +31,17 @@ function Login(){
            
            <TextInput style={styles.Input}/>
            <Image
-           source={require('../../../assets/email.png')}
+           source={require('../../assets/email.png')}
            style={{width:29, height:29}}
          />
          </View>
          
          <Text style={styles.Text}>Senha:</Text>
          <View style={styles.InputBox}>
-         <TextInput secureTextEntry style={styles.Input}/>
+         <TextInput secureTextEntry={true} style={styles.Input}/>
       
          <Image
-      source={require('../../../assets/eye.png')}
+      source={require('../../assets/eye.png')}
       style={{width:29, height:29}}
          />
          </View>
@@ -59,7 +51,6 @@ function Login(){
       <View style={styles.BottomBox}>
 
       <TouchableOpacity
-      onPress={()=> HomePage}
       style={styles.Button}>
         <Text style={styles.ButtonText}>Entrar</Text>
 
@@ -72,7 +63,6 @@ function Login(){
       </View>
       
     </View>
-    </NavigationContainer>
   )
 }
 export default Login;

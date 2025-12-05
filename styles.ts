@@ -4,10 +4,9 @@ import {StyleSheet} from 'react-native';
 export const styles = StyleSheet.create({
     container: {
         flex:1,
-        textAlign:'center',
         alignItems:'center',
         justifyContent:'center',
-        backgroundColor:'#ffffffff',
+        backgroundColor:'#FFFFFF',
         
     },
     Input: {
@@ -20,14 +19,11 @@ export const styles = StyleSheet.create({
         marginRight:20,
         height:50,
         fontSize:20,
-        justifyContent:'center',
         paddingLeft:20,
 
         
     },
     Title:{
-        justifyContent:'center',
-        alignItems:'center',
         fontSize:50,
         fontWeight:"900",
         fontStyle:'italic',
@@ -47,8 +43,6 @@ export const styles = StyleSheet.create({
 
     Link:{
         textDecorationLine:'underline',
-        justifyContent:'center',
-        alignItems:'center',
         fontWeight:'600',
         marginTop:10,
         paddingLeft:5,
@@ -69,7 +63,6 @@ export const styles = StyleSheet.create({
     MiddleBox:{
         marginTop:'60%',
         marginBottom:'5%',
-        flex:0,
         paddingLeft:20,
         
 
@@ -98,7 +91,6 @@ export const styles = StyleSheet.create({
         alignItems:'center',
         justifyContent:'center',
         alignContent:'center',
-        textAlign:'center',
         width:168,
         height:60,
 
@@ -107,8 +99,6 @@ export const styles = StyleSheet.create({
         textAlign:'center',
         fontSize:26,
         fontWeight:'900',
-        justifyContent:'center',
-        alignItems:'center',
 
     },
 

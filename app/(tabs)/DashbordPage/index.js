@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-export default function GraficPage() {
+export default function Dashbord() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Grafic Page</Text>
+      <Text>Dashbord Page</Text>
     </View>
   );
 }

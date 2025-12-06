@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
 import {View, Text, Image, TextInput, TouchableOpacity} from "react-native";
-import { Link } from 'expo-router';
+import { Link,router} from 'expo-router';
 
 
 import { styles } from "../../styles";
 
 
-
+function handleLogin(){
+   router.replace('/(tabs)/HomePage')
+}
 
 
 function Login({}){
@@ -50,7 +52,7 @@ function Login({}){
 
       <View style={styles.BottomBox}>
 
-      <TouchableOpacity
+      <TouchableOpacity onPress={handleLogin}
       style={styles.Button}>
         <Text style={styles.ButtonText}>Entrar</Text>
 

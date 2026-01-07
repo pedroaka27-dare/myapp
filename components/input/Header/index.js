@@ -1,14 +1,13 @@
 import React from "react"
-import{ View, StyleSheet, Text, StatusBar, TouchableOpacity} from "react-native"
-import {Feather} from '@expo/vector-icons'
+import{ View, StyleSheet, Text, StatusBar, TouchableOpacity, Image } from "react-native"
 
-export default function Header({name}){
+export default function Header({ name, onUserPress }){
     return(
         <View style = {styles.container}>
             <View style={styles.content}>
                 <Text style={styles.username}>Olá, Pedro Cruz{name}</Text>
-                <TouchableOpacity activeOpacity={0.6} style={styles.buttonUser}>
-                    <Feather name="user" size={27} color="#000000ff"/>
+                <TouchableOpacity activeOpacity={0.6} style={styles.buttonUser} onPress={onUserPress}>
+                    <Image source={require('../../../assets/user.png')} style={{ width: 27, height: 27 }} />
                 </TouchableOpacity>
             </View>
         </View>

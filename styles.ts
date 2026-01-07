@@ -45,7 +45,6 @@ export const styles = StyleSheet.create({
         textDecorationLine:'underline',
         fontWeight:'600',
         marginTop:10,
-        paddingLeft:5,
         textAlign:'center',
         fontSize:16,
 
@@ -53,25 +52,23 @@ export const styles = StyleSheet.create({
 
     TopBox: {
         flex:1,
-        marginTop:'10%',
-        marginBottom:'10%',
+        marginTop:40,
+        marginBottom:-20,
         alignItems:'center',
         alignContent:'center',
         
     },
 
     MiddleBox:{
-        marginTop:'60%',
-        marginBottom:'5%',
+        marginBottom:-30,
         paddingLeft:20,
         
 
     },
 
     BottomBox:{
-        flex:1,
-        marginTop:'30%',
-        marginBottom:'5%',
+        marginTop:'25%',
+        marginBottom:50,
         alignItems:'center',
         alignContent:'center',
         justifyContent:'space-between',
@@ -93,6 +90,7 @@ export const styles = StyleSheet.create({
         alignContent:'center',
         width:168,
         height:60,
+        marginBottom:50,
 
     },
     ButtonText:{

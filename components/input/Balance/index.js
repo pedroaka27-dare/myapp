@@ -1,7 +1,29 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {View,Text,StyleSheet} from 'react-native';
 
-export default function Balance({saldo, gastos}){
+export default function Balance({saldo, gastos, movimentos = []}){
+    // Calcular créditos e débitos baseado na lista de movimentos
+    const { totalCreditos, totalDebitos } = useMemo(() => {
+        let creditos = 0;
+        let debitos = 0;
+
+        movimentos.forEach(item => {
+            const valor = parseFloat(item.value) || 0;
+            if (item.type === 1) {
+                // Crédito
+                creditos += valor;
+            } else if (item.type === 0) {
+                // Débito
+                debitos += valor;
+            }
+        });
+
+        return {
+            totalCreditos: creditos.toFixed(2),
+            totalDebitos: debitos.toFixed(2),
+        };
+    }, [movimentos]);
+
     return(
         <View style={styles.container}>
 
@@ -9,7 +31,7 @@ export default function Balance({saldo, gastos}){
                 <Text style={styles.itemTitle}>Crédito</Text>
                 <View style={styles.content}>
                     <Text style={styles.currentSymbol}>R$</Text>
-                    <Text style={styles.balance}>{saldo}</Text>
+                    <Text style={styles.balance}>{totalCreditos}</Text>
                 </View>
             </View>
 
@@ -17,7 +39,7 @@ export default function Balance({saldo, gastos}){
                 <Text style={styles.itemTitle}>Débito</Text>
                 <View style={styles.content}>
                     <Text style={styles.currentSymbol}>R$</Text>
-                    <Text style={styles.expenses}>{gastos}</Text>
+                    <Text style={styles.expenses}>{totalDebitos}</Text>
                 </View>
             </View>
         </View>
@@ -46,20 +68,22 @@ const styles = StyleSheet.create({
     content: {
         flexDirection:'row',
         alignItems:'center',
-
-
+        flexShrink: 1,
     },
     currentSymbol:{
         color: '#000000ff',
         marginRight: 6,
+        flexShrink: 0,
     },
     balance:{
         fontSize:22,
         color: '#2ecc71',
+        flexShrink: 0,
     },
     expenses:{
         fontSize:22,
         color: '#e74c3c',
+        flexShrink: 0,
     }
 
 })

@@ -14,7 +14,8 @@ export default function Dashbord() {
   const [showDatePickerFim, setShowDatePickerFim] = useState(false);
   const [movimentos, setMovimentos] = useState([]);
 
-    const { movements, addMovement } = useContext(MovementContext);
+  const { movements, addMovement } = useContext(MovementContext);
+
   // Carregar movimentos ao montar e quando o context mudar
   useEffect(() => {
     const loadMovimentos = async () => {
@@ -28,21 +29,21 @@ export default function Dashbord() {
     loadMovimentos();
   }, []);
 
-    // Sincronizar quando movimentos são adicionados ou removidos no context
-    useEffect(() => {
-      // Recarregar dados quando houver mudanças no context
-      const loadMovimentos = async () => {
-        try {
-          const data = await getAllMovimentos();
-          setMovimentos(Array.isArray(data) ? data : []);
-        } catch (error) {
-          console.error('Erro ao carregar movimentos:', error);
-        }
-      };
-      if (movements.length >= 0) {
-        loadMovimentos();
+  // Sincronizar quando movimentos são adicionados ou removidos no context
+  useEffect(() => {
+    // Recarregar dados quando houver mudanças no context
+    const loadMovimentos = async () => {
+      try {
+        const data = await getAllMovimentos();
+        setMovimentos(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.error('Erro ao carregar movimentos:', error);
       }
-    }, [movements]);
+    };
+    if (movements.length >= 0) {
+      loadMovimentos();
+    }
+  }, [movements]);
   const handleConfirmDataInicio = (date) => {
     setDataInicio(date);
   };

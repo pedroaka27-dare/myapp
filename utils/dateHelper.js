@@ -52,7 +52,12 @@ export const validateYear = (text) => {
 // Converter data DD/MM/YYYY para objeto Date
 export const parseDate = (dateString) => {
   if (!dateString) return null;
-  const [day, month, year] = dateString.split('/');
+  const parts = dateString.split('/');
+  if (parts.length !== 3) return null;
+  
+  const [day, month, year] = parts;
+  if (!day || !month || !year) return null;
+  
   // Se ano tem 2 dígitos, assumir 20xx
   const fullYear = year.length === 2 ? `20${year}` : year;
   return new Date(fullYear, parseInt(month) - 1, parseInt(day));

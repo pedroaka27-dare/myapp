@@ -5,7 +5,6 @@ import { parseDate } from '../../../utils/dateHelper';
 export default function DateFilter({ movimentos = [], onFilter }) {
     const [dataInicio, setDataInicio] = useState('');
     const [dataFim, setDataFim] = useState('');
-    const [isFilterActive, setIsFilterActive] = useState(false);
 
     // Validar e formatar entrada de data com suporte DD/MM/YYYY
     const handleDateInputFilter = (text) => {
@@ -50,16 +49,20 @@ export default function DateFilter({ movimentos = [], onFilter }) {
 
     // Filtrar apenas por data
     const filteredMovimentos = useMemo(() => {
-        if (!dataInicio || !dataFim) {
+        if (!dataInicio || !dataFim || dataInicio.length !== 10 || dataFim.length !== 10) {
             return [];
         }
 
         const inicio = customParseDate(dataInicio);
         const fim = customParseDate(dataFim);
 
+        if (!inicio || !fim) {
+            return [];
+        }
+
         return movimentos.filter(item => {
             const itemDate = customParseDate(item.date);
-            return itemDate >= inicio && itemDate <= fim;
+            return itemDate && itemDate >= inicio && itemDate <= fim;
         });
     }, [movimentos, dataInicio, dataFim]);
 
@@ -151,24 +154,7 @@ export default function DateFilter({ movimentos = [], onFilter }) {
                 </Pressable>
             </View>
 
-            {isFilterActive && (
-                <View style={styles.resultContainer}>
-                    <Text style={styles.resultTitle}>Período: {dataInicio} - {dataFim}</Text>
-                    <View style={styles.resultRow}>
-                        <View style={styles.resultItem}>
-                            <Text style={styles.resultLabel}>Crédito</Text>
-                            <Text style={styles.resultCredito}>R$ {creditos}</Text>
-                        </View>
-                        <View style={styles.resultItem}>
-                            <Text style={styles.resultLabel}>Débito</Text>
-                            <Text style={styles.resultDebito}>R$ {debitos}</Text>
-                        </View>
-                    </View>
-                    <Text style={styles.resultCount}>
-                        {filteredMovimentos.length} movimento(s) encontrado(s)
-                    </Text>
-                </View>
-            )}
+
         </View>
     );
 }
@@ -210,6 +196,7 @@ const styles = StyleSheet.create({
         marginBottom: 4,
     },
     input: {
+        height: 44,
         backgroundColor: '#FFC100',
         borderRadius: 12,
         paddingHorizontal: 12,

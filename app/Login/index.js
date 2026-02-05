@@ -1,15 +1,17 @@
 
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {View, Text, Image, TextInput, TouchableOpacity, Alert} from "react-native";
 import { router } from 'expo-router';
 import { styles } from "../../styles";
 import CadastroModal from '../../components/CadastroModal';
 import { initDatabase, addUsuario, getUsuarioByEmailSenha } from '../../services/database';
+import { UserContext } from '../../context/MovementContext';
 
 function Login() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
+  const { setCurrentUser } = useContext(UserContext);
 
   React.useEffect(() => { initDatabase(); }, []);
 
@@ -20,6 +22,7 @@ function Login() {
     }
     const usuario = await getUsuarioByEmailSenha(email, senha);
     if (usuario) {
+      setCurrentUser(usuario);
       router.replace('/(tabs)/HomePage');
     } else {
       Alert.alert('Erro', 'E-mail ou senha inválidos!');

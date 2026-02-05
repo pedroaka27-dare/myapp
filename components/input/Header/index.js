@@ -5,7 +5,7 @@ export default function Header({ name, onUserPress }){
     return(
         <View style = {styles.container}>
             <View style={styles.content}>
-                <Text style={styles.username}>Olá, Pedro Cruz{name}</Text>
+                <Text style={styles.username}>Olá, {name}</Text>
                 <TouchableOpacity activeOpacity={0.6} style={styles.buttonUser} onPress={onUserPress}>
                     <Image source={require('../../../assets/user.png')} style={{ width: 27, height: 27 }} />
                 </TouchableOpacity>

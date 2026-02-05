@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, Animated, Dimensions } from 'react-native';
+import { UserContext } from '../context/MovementContext';
 
 const { width } = Dimensions.get('window');
 
 export default function UserMenu({ visible, onClose, onLogoff }) {
   const translateX = React.useRef(new Animated.Value(width)).current;
+  const { usuario, logoutUser } = useContext(UserContext);
 
   React.useEffect(() => {
     Animated.timing(translateX, {
@@ -14,7 +16,14 @@ export default function UserMenu({ visible, onClose, onLogoff }) {
     }).start();
   }, [visible]);
 
+  const handleLogoff = () => {
+    logoutUser();
+    onLogoff();
+  };
+
   if (!visible) return null;
+
+  const nomeUsuario = usuario ? `${usuario.nome} ${usuario.sobrenome}` : 'Usuário';
 
   return (
     <Animated.View style={[styles.overlay, { transform: [{ translateX }] }] }>
@@ -25,7 +34,8 @@ export default function UserMenu({ visible, onClose, onLogoff }) {
         <View style={styles.userIconBox}>
           <Image source={require('../assets/user.png')} style={{ width: 60, height: 60 }} />
         </View>
-        <TouchableOpacity style={styles.logoffBtn} onPress={onLogoff}>
+        <Text style={styles.userName}>{nomeUsuario}</Text>
+        <TouchableOpacity style={styles.logoffBtn} onPress={handleLogoff}>
           <Text style={styles.logoffText}>Fazer logoff</Text>
         </TouchableOpacity>
       </View>
@@ -66,6 +76,13 @@ const styles = StyleSheet.create({
   userIconBox: {
     alignItems: 'center',
     marginVertical: 32,
+  },
+  userName: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#000',
+    textAlign: 'center',
+    marginTop: 12,
   },
   logoffBtn: {
     backgroundColor: '#FFC100',

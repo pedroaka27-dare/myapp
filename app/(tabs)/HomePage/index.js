@@ -3,7 +3,7 @@ import { View, Text, Image, TouchableOpacity, FlatList, TextInput } from 'react-
 import { parseDate } from '../../../utils/dateHelper';
 import { router } from 'expo-router';
 import UserMenu from '../../../components/UserMenu';
-import { MovementContext } from '../../../context/MovementContext';
+import { MovementContext, UserContext } from '../../../context/MovementContext';
 
 import { styles } from "./_styles";
 import Balance from '../../../components/input/Balance';
@@ -25,6 +25,7 @@ export default function HomePage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [menuVisible, setMenuVisible] = useState(false);
   const { movements, addMovement, updateMovement, deleteMovement: deleteMovementContext } = useContext(MovementContext);
+  const { usuario } = useContext(UserContext);
   const ITEMS_PER_PAGE = 5;
 
   const loadMovs = async () => {
@@ -110,10 +111,12 @@ export default function HomePage() {
     }
   };
 
+  const nomeUsuario = usuario ? `${usuario.nome} ${usuario.sobrenome}` : 'Usuário';
+
   return (
     <View style={styles.container}>
       <UserMenu visible={menuVisible} onClose={() => setMenuVisible(false)} onLogoff={() => { setMenuVisible(false); router.replace('/Login'); }} />
-      <Header onUserPress={() => setMenuVisible(true)} />
+      <Header name={nomeUsuario} onUserPress={() => setMenuVisible(true)} />
       <View style={styles.MiddleBox}>
 
         <Balance movimentos={filterActive ? filteredList : list}></Balance>

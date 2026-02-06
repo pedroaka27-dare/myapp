@@ -92,7 +92,7 @@ export default function DateFilter({ movimentos = [], onFilter }) {
             return;
         }
 
-        setIsFilterActive(true);
+        ;
         if (onFilter) {
             onFilter(filteredMovimentos);
         }
@@ -101,7 +101,6 @@ export default function DateFilter({ movimentos = [], onFilter }) {
     const handleLimparFiltro = () => {
         setDataInicio('');
         setDataFim('');
-        setIsFilterActive(false);
         if (onFilter) {
             onFilter([]);
         }

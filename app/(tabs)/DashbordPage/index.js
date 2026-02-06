@@ -97,9 +97,7 @@ export default function Dashbord() {
       <CategoryChart dataInicio={dataInicio} dataFim={dataFim} movimentos={movimentos} />
       <CategoryList dataInicio={dataInicio} dataFim={dataFim} movimentos={movimentos} />
 
-      <View style={styles.bottomBox}>
-        <Button onAddMovimento={handleAddMovimento} />
-      </View>
+
     </ScrollView>
   );
 }

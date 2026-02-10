@@ -82,9 +82,19 @@ export default function HomePage() {
   };
 
   const handleFilter = async (filtered) => {
+    // Se receber null -> limpar filtro
+    if (filtered === null) {
+      await loadMovs();
+      setFilteredList([]);
+      setFilterActive(false);
+      setDisplayedItems(ITEMS_PER_PAGE);
+      return;
+    }
+
     await loadMovs();
-    setFilteredList(filtered);
-    setFilterActive(filtered.length > 0);
+    setFilteredList(filtered || []);
+    // Ativa filtro mesmo que o conjunto filtrado esteja vazio
+    setFilterActive(true);
     setDisplayedItems(ITEMS_PER_PAGE);
   };
 

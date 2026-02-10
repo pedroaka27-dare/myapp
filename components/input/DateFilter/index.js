@@ -1,48 +1,12 @@
 import React, { useState, useMemo } from 'react';
 import { View, Text, StyleSheet, TextInput, Pressable } from 'react-native';
-import { parseDate } from '../../../utils/dateHelper';
+import { parseDate, handleDateInput } from '../../../utils/dateHelper';
 
 export default function DateFilter({ movimentos = [], onFilter }) {
     const [dataInicio, setDataInicio] = useState('');
     const [dataFim, setDataFim] = useState('');
 
-    // Validar e formatar entrada de data com suporte DD/MM/YYYY
-    const handleDateInputFilter = (text) => {
-        // Aceita apenas números
-        const cleaned = text.replace(/[^0-9]/g, '');
-        
-        // Processa dígito por dígito para validar intervalos
-        let formatted = '';
-        
-        // Dia (01-31)
-        if (cleaned.length > 0) {
-            const dayStr = cleaned.slice(0, 2);
-            const dayNum = parseInt(dayStr) || 0;
-            if (dayNum >= 0 && dayNum <= 31) {
-                formatted = dayStr;
-            } else {
-                return formatted;
-            }
-        }
-        
-        // Mês (01-12)
-        if (cleaned.length > 2) {
-            const monthStr = cleaned.slice(2, 4);
-            const monthNum = parseInt(monthStr) || 0;
-            if (monthNum >= 0 && monthNum <= 12) {
-                formatted += '/' + monthStr;
-            } else {
-                return formatted;
-            }
-        }
-        
-        // Ano (até 4 dígitos)
-        if (cleaned.length > 4) {
-            formatted += '/' + cleaned.slice(4, 8);
-        }
-        
-        return formatted;
-    };
+    // Usar util compartilhado para formatar entrada de data
 
     // Converter data DD/MM/YYYY para objeto Date para comparação
     const customParseDate = parseDate;
@@ -87,22 +51,33 @@ export default function DateFilter({ movimentos = [], onFilter }) {
     }, [filteredMovimentos]);
 
     const handleAplicarFiltro = () => {
+
         if (!dataInicio || !dataFim) {
             alert('Preencha ambas as datas');
             return;
         }
 
-        ;
-        if (onFilter) {
-            onFilter(filteredMovimentos);
+        const inicio = customParseDate(dataInicio);
+        const fim = customParseDate(dataFim);
+
+        if (!(inicio instanceof Date) || isNaN(inicio.getTime()) || !(fim instanceof Date) || isNaN(fim.getTime())) {
+            alert('Datas inválidas');
+            return;
         }
+
+        const resultado = movimentos.filter(item => {
+            const itemDate = customParseDate(item.date);
+            return itemDate && itemDate >= inicio && itemDate <= fim;
+        });
+
+        if (onFilter) onFilter(resultado);
     };
 
     const handleLimparFiltro = () => {
         setDataInicio('');
         setDataFim('');
         if (onFilter) {
-            onFilter([]);
+            onFilter(null);
         }
     };
 
@@ -117,7 +92,7 @@ export default function DateFilter({ movimentos = [], onFilter }) {
                         style={styles.input}
                         placeholder="DD/MM/YYYY"
                         value={dataInicio}
-                        onChangeText={(text) => setDataInicio(handleDateInputFilter(text))}
+                        onChangeText={(text) => setDataInicio(handleDateInput(text))}
                         placeholderTextColor="#999"
                         keyboardType="number-pad"
                         maxLength={10}
@@ -130,7 +105,7 @@ export default function DateFilter({ movimentos = [], onFilter }) {
                         style={styles.input}
                         placeholder="DD/MM/YYYY"
                         value={dataFim}
-                        onChangeText={(text) => setDataFim(handleDateInputFilter(text))}
+                        onChangeText={(text) => setDataFim(handleDateInput(text))}
                         placeholderTextColor="#999"
                         keyboardType="number-pad"
                         maxLength={10}
